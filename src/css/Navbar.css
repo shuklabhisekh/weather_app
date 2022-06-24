@@ -36,6 +36,6 @@ cursor: pointer;
     margin-top: 20px;
   }
   #detail>div{
-    /* border: 2px solid black; */
-    width: 15%;
+    border: 2px solid black;
+    width: 12%;
   }

@@ -103,9 +103,12 @@ function Navbar() {
         {days.map((e) => (
           // console.log(e);
           <div>
-            <div>{e.temp.day}℃</div>
-            {/* <img src=`http://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png` alt="" /> */}
-            
+            <span>{e.temp.day}℃</span>
+            <img
+              src={`http://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
+              alt=""
+            />
+
             <div>{e.weather[0].main}</div>
           </div>
         ))}
