@@ -9,6 +9,30 @@ function Navbar() {
   const [days, setDays] = useState([]);
   let waiting;
   console.log("again", days);
+
+  const debounce = (func, delay) => {
+    if (waiting) {
+      clearTimeout(waiting);
+    }
+    waiting = setTimeout(function () {
+      func();
+    }, delay);
+  };
+  const sendCity = () => {
+    console.log(city, "city", "sendCity()");
+    try {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
+        )
+        .then((res) => {
+          sevenDays(res.data.coord.lat, res.data.coord.lon);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {}
+  };
   const takeLocation = () => {
     axios.get("http://ip-api.com/json").then(
       function success(response) {
@@ -24,38 +48,23 @@ function Navbar() {
       }
     );
   };
-
-  const debounce = (func, delay) => {
-    if (waiting) {
-      clearTimeout(waiting);
-    }
-    waiting = setTimeout(function () {
-      func();
-    }, delay);
-  };
-  const sendCity = () => {
-    console.log(city, "city", "sendCity()");
-    try {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2ce49f5497b0e1543e90993ba28432a6&units=metric`
-        )
-        .then((res) => {
-          sevenDays(res.data.coord.lat, res.data.coord.lon);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {}
-  };
   const suggestion = (data) => {
     console.log(data, "suggestion");
   };
   const sevenDays = (lat, lon) => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     try {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=2ce49f5497b0e1543e90993ba28432a6&units=metric`
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
         )
         .then((res) => {
           setDays(res.data.daily);
@@ -65,9 +74,11 @@ function Navbar() {
         });
     } catch {}
   };
+
   useEffect(() => {
     takeLocation();
-  }, [city]);
+  }, []);
+
   return (
     <div>
       <div className="searchbar">
@@ -93,10 +104,8 @@ function Navbar() {
           // console.log(e);
           <div>
             <div>{e.temp.day}℃</div>
-            <img
-              src="http://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png"
-              alt=""
-            />
+            {/* <img src=`http://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png` alt="" /> */}
+            
             <div>{e.weather[0].main}</div>
           </div>
         ))}
