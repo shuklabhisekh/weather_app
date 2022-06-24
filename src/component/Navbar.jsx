@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 function Navbar() {
   const [city, setCity] = useState("");
+  let [days, setDays] = useState([]);
   const takeLocation = () => {
     axios.get("http://ip-api.com/json").then(
       function success(response) {
@@ -18,8 +19,35 @@ function Navbar() {
     );
   };
 
-  const showData = () => {
-    console.log(city, "cityname");
+  const sendCity = () => {
+    if (city.length == 0) {
+      alert("Please enter city");
+      return;
+    }
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2ce49f5497b0e1543e90993ba28432a6&units=metric`
+      )
+      .then((res) => {
+        sevenDays(res.data.coord.lat, res.data.coord.lon);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const sevenDays = (lat, lon) => {
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=2ce49f5497b0e1543e90993ba28432a6&units=metric`
+      )
+      .then((res) => {
+        setDays(res.data.daily);
+        console.log(days);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   useEffect(() => {
     takeLocation();
@@ -37,10 +65,11 @@ function Navbar() {
           placeholder="Search"
           onChange={(e) => setCity(e.target.value)}
         />
-        <button className="searchIcon" onClick={showData}>
+        <button className="searchIcon" onClick={sendCity}>
           <SearchOutlinedIcon fontSize="medium" />
         </button>
       </div>
+      <div id="suggest"></div>
     </div>
   );
 }
