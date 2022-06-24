@@ -27,10 +27,15 @@ cursor: pointer;
  border: none;
  z-index: 1;
 }
-#suggest {
-    border:1px solid red;
-    height: 200px;
+#detail {
+    /* border:1px solid red; */
+    height: 140px;
     width: 55%;
     margin: auto;
-    /* overflow: scroll; */
+    display: flex;
+    margin-top: 20px;
+  }
+  #detail>div{
+    /* border: 2px solid black; */
+    width: 15%;
   }
