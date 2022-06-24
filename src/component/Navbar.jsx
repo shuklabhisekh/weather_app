@@ -1,38 +1,29 @@
 import "../css/Navbar.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function Navbar() {
+  const [city, setCity] = useState("");
   const takeLocation = () => {
-    if ("geolocation" in navigator) {
-      // check if geolocation is supported/enabled on current browser
-      navigator.geolocation.getCurrentPosition(
-        function success(position) {
-          // for when getting location is a success
-          console.log(
-            "latitude",
-            position.coords.latitude,
-            "longitude",
-            position.coords.longitude
-          );
-        },
-        function error(error_message) {
-          // for when getting location results in an error
-          console.error(
-            "An error has occured while retrieving   location",
-            error_message
-          );
-        }
-      );
-    } else {
-      // geolocation is not supported
-      // get your location some other way
-      console.log("geolocation is not enabled on this browser");
-    }
+    axios.get("http://ip-api.com/json").then(
+      function success(response) {
+        console.log("User's State is ", response.data.regionName);
+        console.log("User's City", response.data.city);
+      },
+
+      function fail(data, status) {
+        console.log("Request failed.  Returned status of", status);
+      }
+    );
+  };
+
+  const showData = () => {
+    console.log(city, "cityname");
   };
   useEffect(() => {
     takeLocation();
-  });
+  }, []);
   return (
     <div>
       <div className="searchbar">
@@ -40,8 +31,13 @@ function Navbar() {
           <LocationOnIcon />
         </button>
 
-        <input type="text" className="input" placeholder="Search" />
-        <button className="searchIcon">
+        <input
+          type="text"
+          className="input"
+          placeholder="Search"
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <button className="searchIcon" onClick={showData}>
           <SearchOutlinedIcon fontSize="medium" />
         </button>
       </div>
