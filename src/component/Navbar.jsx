@@ -11,6 +11,10 @@ function Navbar() {
   const [days, setDays] = useState([]);
   const [tempgraph, setTempgraph] = useState("");
   const [tempicon, setTempicon] = useState("");
+  const [sunrise, setSunrise] = useState("");
+  const [sunset, setSunset] = useState("");
+  const [pressure, setPressure] = useState("");
+  const [humidity, setHumidity] = useState("");
   let waiting;
 
   const chartData = {
@@ -88,7 +92,16 @@ function Navbar() {
           .then((res) => {
             console.log(res.data, "res");
             sevenDays(res.data.coord.lat, res.data.coord.lon);
-            detailDiv(res.data.main.temp, res.data.weather[0].icon);
+            detailDiv(
+              res.data.main.temp,
+              res.data.weather[0].icon,
+              res.data.sys.sunrise,
+              res.data.sys.sunset,
+              res.data.main.pressure,
+              res.data.main.humidity
+            );
+            // setSunrise();
+            // setSunset(res.data.sys.sunset);
           })
           .catch((err) => {
             console.log(err);
@@ -117,10 +130,22 @@ function Navbar() {
     } catch {}
   };
 
-  const detailDiv = (data1, data2) => {
-    console.log("detailDiv", data1);
+  const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity) => {
+    console.log("detailDiv", sunRise, sunSet, presure, humdity);
+    let hrRise = new Date(sunRise * 1000).getHours();
+    let minRise = "0" + new Date(sunRise * 1000).getMinutes();
+    let hrSet = new Date(sunSet * 1000).getHours();
+    let minSet = "0" + new Date(sunSet * 1000).getMinutes();
+    let rise = hrRise + ":" + minRise.substr(-2);
+    let set = (hrSet % 12) + ":" + minSet.substr(-2);
+
+    // console.log(hrRise, minRise.substr(-2));
     setTempgraph(data1);
     setTempicon(data2);
+    setSunrise(rise);
+    setSunset(set);
+    setPressure(presure);
+    setHumidity(humdity);
   };
 
   useEffect(() => {
@@ -152,8 +177,16 @@ function Navbar() {
         {days.map((e) => (
           // console.log(e);
           <div
+            key={e.id}
             onClick={() => {
-              detailDiv(e.temp.day, e.weather[0].icon);
+              detailDiv(
+                e.temp.day,
+                e.weather[0].icon,
+                e.sunrise,
+                e.sunset,
+                e.pressure,
+                e.humidity
+              );
             }}
             tabIndex="1"
           >
@@ -187,6 +220,26 @@ function Navbar() {
           // width={500}
           // height={320}
         />
+        <div className="PressureHumidity">
+          <div>
+            <div className="pressure">Pressure</div>
+            <div>{pressure} hpa</div>
+          </div>
+          <div>
+            <div className="humidity">Humidity</div>
+            <div>{humidity} %</div>
+          </div>
+        </div>
+        <div className="sunriseSunset">
+          <div>
+            <div className="sunrise">Sunrise</div>
+            <div>{sunrise}am</div>
+          </div>
+          <div>
+            <div className="sunset">Sunset</div>
+            <div>{sunset}pm</div>
+          </div>
+        </div>
       </div>
     </div>
   );

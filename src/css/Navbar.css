@@ -58,7 +58,7 @@ margin: auto;
     margin-bottom: 30px;
     text-align: start;
     border: 1px solid red;
-    width: 90%;
+    width: 95%;
     display: flex;
     height: 60px;
   }
@@ -67,4 +67,34 @@ margin: auto;
     font-weight: 600;
     margin-right: 15px;
     
+  }
+  .PressureHumidity{
+    width: 95%;
+    height: 60px;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .PressureHumidity>div{
+    width: 47%;
+    padding: 7px;
+    text-align: start;
+    background-color: rgb(243,251,255);
+  }
+  .humidity,.pressure{
+    font-weight: 600;
+  }
+
+  .sunriseSunset{
+    display: flex;
+    width: 95%;
+    height: 60px;
+    margin: auto;
+    margin-top: 20px;
+    justify-content: space-between;
+  }
+ 
+  .sunset,.sunrise{
+font-weight: 600;
   }
