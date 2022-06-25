@@ -223,21 +223,21 @@ function Navbar() {
         <div className="PressureHumidity">
           <div>
             <div className="pressure">Pressure</div>
-            <div>{pressure} hpa</div>
+            <div>{pressure || 1210} hpa</div>
           </div>
           <div>
             <div className="humidity">Humidity</div>
-            <div>{humidity} %</div>
+            <div>{humidity || 43} %</div>
           </div>
         </div>
         <div className="sunriseSunset">
           <div>
             <div className="sunrise">Sunrise</div>
-            <div>{sunrise}am</div>
+            <div>{sunrise || "6:00"}am</div>
           </div>
           <div>
             <div className="sunset">Sunset</div>
-            <div>{sunset}pm</div>
+            <div>{sunset || "7:00"}pm</div>
           </div>
         </div>
       </div>
