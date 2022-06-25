@@ -9,8 +9,9 @@ import { ApexOptios } from "apexcharts";
 function Navbar() {
   const [city, setCity] = useState("");
   const [days, setDays] = useState([]);
+  const [tempgraph, setTempgraph] = useState("");
+  const [tempicon, setTempicon] = useState("");
   let waiting;
-  // console.log("again", days);
 
   const chartData = {
     chart: {
@@ -47,7 +48,7 @@ function Navbar() {
       {
         name: "Temperature",
         type: "area",
-        data: [440, 505, 414, 571, 227, 413, 201, 352, 652, 320, 257, 160],
+        data: [28, 26, 30, 27, 25, 30, 31, 28, 26, 30, 27, 30, 27, 24, 30],
       },
     ],
   };
@@ -76,19 +77,27 @@ function Navbar() {
     } catch (error) {}
   };
   const takeLocation = () => {
-    axios.get("http://ip-api.com/json").then(
-      function success(response) {
-        // console.log("User's State is ", response.data.regionName);
-        // console.log("User's City", response.data.city);
-        // console.log(city, "inside location");
+    axios
+      .get("http://ip-api.com/json")
+      .then((response) => {
         setCity(response.data.city);
-        sendCity();
-      },
+        axios
+          .get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${response.data.city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
+          )
+          .then((res) => {
+            console.log(res.data, "res");
+            sevenDays(res.data.coord.lat, res.data.coord.lon);
+            detailDiv(res.data.main.temp, res.data.weather[0].icon);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
 
-      function fail(data, status) {
+      .catch((status) => {
         console.log("Request failed.  Returned status of", status);
-      }
-    );
+      });
   };
   const suggestion = (data) => {
     console.log(data, "suggestion");
@@ -108,8 +117,10 @@ function Navbar() {
     } catch {}
   };
 
-  const detailDiv = (data) => {
-    console.log("detailDiv", data);
+  const detailDiv = (data1, data2) => {
+    console.log("detailDiv", data1);
+    setTempgraph(data1);
+    setTempicon(data2);
   };
 
   useEffect(() => {
@@ -127,6 +138,7 @@ function Navbar() {
           type="text"
           className="input"
           placeholder="Search"
+          value={city}
           onChange={(e) => {
             setCity(e.target.value);
             // debounce(sendCity, 1000);
@@ -139,13 +151,18 @@ function Navbar() {
       <div id="detail">
         {days.map((e) => (
           // console.log(e);
-          <div onClick={() => detailDiv(e)} tabIndex="1">
+          <div
+            onClick={() => {
+              detailDiv(e.temp.day, e.weather[0].icon);
+            }}
+            tabIndex="1"
+          >
             <div>
               {new Date(`${e.dt}` * 1000).toLocaleDateString("en", {
                 weekday: "long",
               })}
             </div>
-            <span>{e.temp.day}℃</span>
+            <span>{Math.ceil(e.temp.day)}℃</span>
             <img
               src={`http://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
               alt=""
@@ -157,9 +174,9 @@ function Navbar() {
       </div>
       <div className="tempChart">
         <div className="tempChartTemp">
-          <span>22C </span>
+          <span>{Math.ceil(tempgraph)}℃</span>
           <img
-            src="https://weatherapp-swanand.netlify.app/img/cloudy.ac49ed24.svg"
+            src={`http://openweathermap.org/img/wn/${tempicon || "10d"}.png`}
             alt=""
           />
         </div>
