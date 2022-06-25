@@ -34,7 +34,7 @@ function Navbar() {
         inverseColors: true,
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 50, 100],
+        // stops: [0, 50, 100],
         // colorStops: []
       },
     },
@@ -140,6 +140,11 @@ function Navbar() {
         {days.map((e) => (
           // console.log(e);
           <div onClick={() => detailDiv(e)} tabIndex="1">
+            <div>
+              {new Date(`${e.dt}` * 1000).toLocaleDateString("en", {
+                weekday: "long",
+              })}
+            </div>
             <span>{e.temp.day}℃</span>
             <img
               src={`http://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
@@ -151,6 +156,13 @@ function Navbar() {
         ))}
       </div>
       <div className="tempChart">
+        <div className="tempChartTemp">
+          <span>22C </span>
+          <img
+            src="https://weatherapp-swanand.netlify.app/img/cloudy.ac49ed24.svg"
+            alt=""
+          />
+        </div>
         <Chart
           options={chartData}
           series={chartData.series}
