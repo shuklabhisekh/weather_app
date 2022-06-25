@@ -3,12 +3,54 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { debounce } from "@mui/material";
+import Chart from "react-apexcharts";
+import { ApexOptios } from "apexcharts";
+
 function Navbar() {
   const [city, setCity] = useState("");
   const [days, setDays] = useState([]);
   let waiting;
   // console.log("again", days);
+
+  const chartData = {
+    chart: {
+      id: "apexchart-example",
+      // foreColor: theme.palette.primary.main,
+      type: "line",
+    },
+    xaxis: {
+      categories: [
+        12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+        12,
+      ],
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        shadeIntensity: 0.5,
+        gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+        inverseColors: true,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 50, 100],
+        // colorStops: []
+      },
+    },
+    legend: {
+      // position: '',
+      width: 400,
+      // position: 'top',
+    },
+    series: [
+      {
+        name: "Temperature",
+        type: "area",
+        data: [440, 505, 414, 571, 227, 413, 201, 352, 652, 320, 257, 160],
+      },
+    ],
+  };
 
   const debounce = (func, delay) => {
     if (waiting) {
@@ -52,15 +94,6 @@ function Navbar() {
     console.log(data, "suggestion");
   };
   const sevenDays = (lat, lon) => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
     try {
       axios
         .get(
@@ -116,6 +149,15 @@ function Navbar() {
             <div>{e.weather[0].main}</div>
           </div>
         ))}
+      </div>
+      <div className="tempChart">
+        <Chart
+          options={chartData}
+          series={chartData.series}
+          // type="area"
+          // width={500}
+          // height={320}
+        />
       </div>
     </div>
   );
