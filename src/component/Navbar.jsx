@@ -8,7 +8,7 @@ function Navbar() {
   const [city, setCity] = useState("");
   const [days, setDays] = useState([]);
   let waiting;
-  console.log("again", days);
+  // console.log("again", days);
 
   const debounce = (func, delay) => {
     if (waiting) {
@@ -36,9 +36,9 @@ function Navbar() {
   const takeLocation = () => {
     axios.get("http://ip-api.com/json").then(
       function success(response) {
-        console.log("User's State is ", response.data.regionName);
-        console.log("User's City", response.data.city);
-        console.log(city, "inside location");
+        // console.log("User's State is ", response.data.regionName);
+        // console.log("User's City", response.data.city);
+        // console.log(city, "inside location");
         setCity(response.data.city);
         sendCity();
       },
@@ -75,6 +75,10 @@ function Navbar() {
     } catch {}
   };
 
+  const detailDiv = (data) => {
+    console.log("detailDiv", data);
+  };
+
   useEffect(() => {
     takeLocation();
   }, []);
@@ -102,7 +106,7 @@ function Navbar() {
       <div id="detail">
         {days.map((e) => (
           // console.log(e);
-          <div>
+          <div onClick={() => detailDiv(e)} tabIndex="1">
             <span>{e.temp.day}℃</span>
             <img
               src={`http://openweathermap.org/img/wn/${e.weather[0].icon}.png`}

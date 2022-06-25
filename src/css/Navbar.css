@@ -33,9 +33,15 @@ cursor: pointer;
     width: 55%;
     margin: auto;
     display: flex;
-    margin-top: 20px;
+    margin-top: 25px;
+    justify-content: space-between;
   }
+
   #detail>div{
-    border: 2px solid black;
-    width: 12%;
+    /* border: 2px solid black; */
+    width: 11%;
+    font-weight: 600;
+  }
+  #detail>div:focus{
+    border: 3px solid rgb(0,166,250);
   }
