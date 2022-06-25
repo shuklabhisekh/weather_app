@@ -197,7 +197,7 @@ function Navbar() {
             </div>
             <span>{Math.ceil(e.temp.day)}℃</span>
             <img
-              src={`http://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
+              src={`https://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
               alt=""
             />
 
@@ -209,7 +209,7 @@ function Navbar() {
         <div className="tempChartTemp">
           <span>{Math.ceil(tempgraph)}℃</span>
           <img
-            src={`http://openweathermap.org/img/wn/${tempicon || "10d"}.png`}
+            src={`https://openweathermap.org/img/wn/${tempicon || "10d"}.png`}
             alt=""
           />
         </div>
