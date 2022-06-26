@@ -214,13 +214,13 @@ function Navbar() {
           options={{
             dataLabels: {
               formatter: (val) => {
-                return `${val}℃`;
+                // return `${val}℃`;
               },
             },
             yaxis: {
               labels: {
                 formatter: (val) => {
-                  return `${val}℃`;
+                  return `${Math.ceil(val)}℃`;
                 },
               },
             },
