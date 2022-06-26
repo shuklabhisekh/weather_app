@@ -15,6 +15,9 @@
     border: none;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.tempIcon{
+  height: 70px;
+}
 .searchIcon{
 margin-left: -40px;
 border: none;
@@ -39,7 +42,6 @@ cursor: pointer;
   }
 
   #detail>div{
-    /* border: 2px solid black; */
     width: 11%;
     font-weight: 600;
   }
@@ -52,6 +54,7 @@ cursor: pointer;
     width: 55%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: auto;
+    border-radius: 7px;
   }
   .tempChartTemp{
     margin: auto;
@@ -107,28 +110,43 @@ font-weight: 600;
   }
 
   @media screen and (max-width: 600px){
+    .searchbar{
+      width: 90%;
+    }
+    #detail{
+      /* border: 2px solid pink; */
+      overflow: scroll;
+      width: 90%
+    }
     #detail>div{
-      width: 11%;
-      font-weight: 600;
-      font-size: 10px;
+      width: 600px;
+      border: 2px solid pink;
+      /* font-weight: 600;
+      font-size: 10px; */
+    }
+    .tempChart{
+      width: 85%;
+      border-radius: 7px;
     }
     .tempChartTemp{
-      height: 30px;
+      /* height: 30px; */
     }
     .tempChartTemp>span{
-      font-size: 18px;
-      font-weight: 600;
+      /* font-size: 18px;
+      font-weight: 600; */
       margin-right: 5px;
 
     }
     .PressureHumidity, .sunriseSunset{
-      font-size: 12px;
     }
     #detail>div:focus{
       border: 3px solid rgb(0,166,250);
-      height: 110px;
+      height: 120px;
     }
     .detailIcon{
-      margin-left: -15px;
+      margin-left: -8px;
+    }
+    .PressureHumidity>div{
+      width: 44%;
     }
   }

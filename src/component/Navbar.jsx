@@ -218,6 +218,7 @@ function Navbar() {
         <div className="tempChartTemp">
           <span>{Math.ceil(tempgraph)}℃</span>
           <img
+          className="tempIcon"
             src={`https://openweathermap.org/img/wn/${tempicon || "10d"}.png`}
             alt=""
           />
