@@ -122,7 +122,6 @@ function Navbar() {
     } else {
       hourTempArray.current = e;
     }
-    console.log(hourTempArray, "detaildiv");
     setTempgraph(data1);
     setTempicon(data2);
     setSunrise(rise);
@@ -226,7 +225,7 @@ function Navbar() {
               },
             },
             xaxis: {
-              categories: ["6:00am", "12:00pm", "6:00pm", "12:00pm"],
+              categories: ["6:00am", "12:00pm", "6:00pm", "12:00am"],
             },
           }}
         />
