@@ -185,6 +185,7 @@ function Navbar() {
       <div id="detail">
         {days.map((e) => (
           <div
+          id="detailInsideDiv"
             key={e.id}
             onClick={() => {
               detailDiv(
@@ -205,7 +206,7 @@ function Navbar() {
             </div>
             <span>{Math.ceil(e.temp.day)}℃</span>
             <img
-            className="detailIcon"
+              className="detailIcon"
               src={`https://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
               alt=""
             />
@@ -218,7 +219,7 @@ function Navbar() {
         <div className="tempChartTemp">
           <span>{Math.ceil(tempgraph)}℃</span>
           <img
-          className="tempIcon"
+            className="tempIcon"
             src={`https://openweathermap.org/img/wn/${tempicon || "10d"}.png`}
             alt=""
           />

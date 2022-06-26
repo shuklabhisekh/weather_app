@@ -32,7 +32,7 @@ cursor: pointer;
 }
 #detail {
     /* border:1px solid red; */
-    height: 130px;
+    height: 140px;
     width: 55%;
     margin: auto;
     display: flex;
@@ -47,6 +47,8 @@ cursor: pointer;
   }
   #detail>div:focus{
     border: 3px solid rgb(0,166,250);
+    margin-top: -3px;
+
   }
   .tempChart{
     padding: 10px;
@@ -119,8 +121,8 @@ font-weight: 600;
       width: 90%
     }
     #detail>div{
-      width: 600px;
-      border: 2px solid pink;
+      width: 300px;
+      border: 10px solid transparent;
       /* font-weight: 600;
       font-size: 10px; */
     }
@@ -142,6 +144,7 @@ font-weight: 600;
     #detail>div:focus{
       border: 3px solid rgb(0,166,250);
       height: 120px;
+      margin-top: 8px;
     }
     .detailIcon{
       margin-left: -8px;
