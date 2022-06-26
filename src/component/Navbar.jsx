@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
 import { ApexOptios } from "apexcharts";
+import { CircularProgress } from "@mui/material";
 
 function Navbar() {
   const [city, setCity] = useState("");
@@ -16,6 +17,7 @@ function Navbar() {
   const [sunset, setSunset] = useState("");
   const [pressure, setPressure] = useState("");
   const [humidity, setHumidity] = useState("");
+  const [spinner, setSpinner] = useState(true);
   let waiting;
 
   const chartData = {
@@ -105,8 +107,6 @@ function Navbar() {
               res.data.main.pressure,
               res.data.main.humidity
             );
-            // setSunrise();
-            // setSunset(res.data.sys.sunset);
           })
           .catch((err) => {
             console.log(err);
@@ -144,7 +144,6 @@ function Navbar() {
     let rise = hrRise + ":" + minRise.substr(-2);
     let set = (hrSet % 12) + ":" + minSet.substr(-2);
 
-    // console.log(hrRise, minRise.substr(-2));
     setTempgraph(data1);
     setTempicon(data2);
     setSunrise(rise);
@@ -155,9 +154,14 @@ function Navbar() {
 
   useEffect(() => {
     takeLocation();
+    setTimeout(() => setSpinner(false), 1000);
   }, []);
 
-  return (
+  return spinner ? (
+    <div className="spinner">
+      <CircularProgress size={200} />
+    </div>
+  ) : (
     <div>
       <div className="searchbar">
         <button className="location">
@@ -196,7 +200,7 @@ function Navbar() {
           >
             <div>
               {new Date(`${e.dt}` * 1000).toLocaleDateString("en", {
-                weekday: "long",
+                weekday: "short",
               })}
             </div>
             <span>{Math.ceil(e.temp.day)}℃</span>
@@ -218,6 +222,7 @@ function Navbar() {
           />
         </div>
         <Chart options={chartData} series={chartData.series} />
+
         <div className="PressureHumidity">
           <div>
             <div className="pressure">Pressure</div>

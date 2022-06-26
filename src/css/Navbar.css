@@ -49,9 +49,9 @@ cursor: pointer;
   .tempChart{
     padding: 10px;
     padding-top: 30px;
-width: 55%;
-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-margin: auto;
+    width: 55%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: auto;
   }
   .tempChartTemp{
     margin: auto;
@@ -67,6 +67,7 @@ margin: auto;
     margin-right: 15px;
     
   }
+ 
   .PressureHumidity{
     width: 95%;
     height: 60px;
@@ -96,4 +97,32 @@ margin: auto;
  
   .sunset,.sunrise{
 font-weight: 600;
+  }
+
+  .spinner{
+    width: 50%;
+    height: 300px;
+    margin: auto;
+    margin-top: 100px;
+  }
+
+  @media screen and (max-width: 600px){
+    #detail>div{
+      /* border: 2px solid black; */
+      width: 11%;
+      font-weight: 600;
+      font-size: 10px;
+    }
+    .tempChartTemp{
+      height: 30px;
+    }
+    .tempChartTemp>span{
+      font-size: 18px;
+      font-weight: 600;
+      margin-right: 5px;
+
+    }
+    .PressureHumidity, .sunriseSunset{
+      font-size: 12px;
+    }
   }
