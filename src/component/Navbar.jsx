@@ -135,7 +135,7 @@ function Navbar() {
     setTimeout(() => setSpinner(false), 1000);
   }, []);
   useEffect(() => {
-    takeLocation();
+    sendCity();
   }, []);
 
   return spinner ? (
