@@ -8,6 +8,7 @@ import { ApexOptios } from "apexcharts";
 
 function Navbar() {
   const [city, setCity] = useState("");
+  const [region, setRegion] = useState("");
   const [days, setDays] = useState([]);
   const [tempgraph, setTempgraph] = useState("");
   const [tempicon, setTempicon] = useState("");
@@ -66,13 +67,13 @@ function Navbar() {
     }, delay);
   };
   const sendCity = () => {
-    console.log(city, "city", "sendCity()");
     try {
       axios
         .get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
         )
         .then((res) => {
+          console.log(res, "sencity");
           sevenDays(res.data.coord.lat, res.data.coord.lon);
         })
         .catch((err) => {
@@ -80,11 +81,15 @@ function Navbar() {
         });
     } catch (error) {}
   };
+
   const takeLocation = () => {
     axios
-      .get("http://ip-api.com/json")
+      .get(" https://ipinfo.io/json?token=52ed0181817dc8")
+      // .get("http://ip-api.com/json")
       .then((response) => {
+        console.log("takelocation respone", response);
         setCity(response.data.city);
+        setRegion(response.data.region);
         axios
           .get(
             `https://api.openweathermap.org/data/2.5/weather?q=${response.data.city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
@@ -122,6 +127,7 @@ function Navbar() {
           `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
         )
         .then((res) => {
+          console.log(res, "sevenDays");
           setDays(res.data.daily);
         })
         .catch((err) => {
@@ -131,7 +137,6 @@ function Navbar() {
   };
 
   const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity) => {
-    console.log("detailDiv", sunRise, sunSet, presure, humdity);
     let hrRise = new Date(sunRise * 1000).getHours();
     let minRise = "0" + new Date(sunRise * 1000).getMinutes();
     let hrSet = new Date(sunSet * 1000).getHours();
@@ -175,7 +180,6 @@ function Navbar() {
       </div>
       <div id="detail">
         {days.map((e) => (
-          // console.log(e);
           <div
             key={e.id}
             onClick={() => {
@@ -213,13 +217,7 @@ function Navbar() {
             alt=""
           />
         </div>
-        <Chart
-          options={chartData}
-          series={chartData.series}
-          // type="area"
-          // width={500}
-          // height={320}
-        />
+        <Chart options={chartData} series={chartData.series} />
         <div className="PressureHumidity">
           <div>
             <div className="pressure">Pressure</div>
