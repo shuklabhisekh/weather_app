@@ -205,6 +205,7 @@ function Navbar() {
             </div>
             <span>{Math.ceil(e.temp.day)}℃</span>
             <img
+            className="detailIcon"
               src={`https://openweathermap.org/img/wn/${e.weather[0].icon}.png`}
               alt=""
             />
