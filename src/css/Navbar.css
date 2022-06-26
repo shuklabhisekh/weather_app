@@ -31,7 +31,6 @@ cursor: pointer;
  z-index: 1;
 }
 #detail {
-    /* border:1px solid red; */
     height: 140px;
     width: 55%;
     margin: auto;
@@ -116,31 +115,24 @@ font-weight: 600;
       width: 90%;
     }
     #detail{
-      /* border: 2px solid pink; */
       overflow: scroll;
       width: 90%
     }
     #detail>div{
       width: 300px;
       border: 10px solid transparent;
-      /* font-weight: 600;
-      font-size: 10px; */
     }
     .tempChart{
       width: 85%;
       border-radius: 7px;
     }
-    .tempChartTemp{
-      /* height: 30px; */
-    }
+  
     .tempChartTemp>span{
-      /* font-size: 18px;
-      font-weight: 600; */
+    
       margin-right: 5px;
 
     }
-    .PressureHumidity, .sunriseSunset{
-    }
+   
     #detail>div:focus{
       border: 3px solid rgb(0,166,250);
       height: 120px;
