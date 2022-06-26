@@ -8,7 +8,7 @@ import { ApexOptios } from "apexcharts";
 import { CircularProgress } from "@mui/material";
 
 function Navbar() {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Pune");
   const [region, setRegion] = useState("");
   const [days, setDays] = useState([]);
   const [tempgraph, setTempgraph] = useState("");
