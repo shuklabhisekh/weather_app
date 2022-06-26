@@ -130,10 +130,12 @@ function Navbar() {
     setHumidity(humdity);
   };
 
-  useEffect(() => {}, []);
   useEffect(() => {
     takeLocation();
     setTimeout(() => setSpinner(false), 1000);
+  }, []);
+  useEffect(() => {
+    takeLocation();
   }, []);
 
   return spinner ? (
