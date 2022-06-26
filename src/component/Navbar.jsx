@@ -1,7 +1,7 @@
 import "../css/Navbar.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
 import { ApexOptios } from "apexcharts";
@@ -19,46 +19,7 @@ function Navbar() {
   const [humidity, setHumidity] = useState("");
   const [spinner, setSpinner] = useState(true);
   let waiting;
-
-  const chartData = {
-    chart: {
-      id: "apexchart-example",
-      // foreColor: theme.palette.primary.main,
-      type: "line",
-    },
-    xaxis: {
-      categories: [
-        12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-        12,
-      ],
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 1,
-        // stops: [0, 50, 100],
-        // colorStops: []
-      },
-    },
-    legend: {
-      // position: '',
-      width: 400,
-      // position: 'top',
-    },
-    series: [
-      {
-        name: "Temperature",
-        type: "area",
-        data: [28, 26, 30, 27, 25, 30, 31, 28, 26, 30, 27, 30, 27, 24, 30],
-      },
-    ],
-  };
+  const hourTempArray = useRef([]);
 
   const debounce = (func, delay) => {
     if (waiting) {
@@ -89,7 +50,6 @@ function Navbar() {
       .get(" https://ipinfo.io/json?token=52ed0181817dc8")
       // .get("http://ip-api.com/json")
       .then((response) => {
-        // console.log("takelocation respone", response);
         setCity(response.data.city);
         setRegion(response.data.region);
         axios
@@ -97,15 +57,24 @@ function Navbar() {
             `https://api.openweathermap.org/data/2.5/weather?q=${response.data.city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
           )
           .then((res) => {
-            // console.log(res.data, "res");
             sevenDays(res.data.coord.lat, res.data.coord.lon);
+            let arr = [];
+            for (let x in res.data.main) {
+              if (x == "feels_like" || "temp" || "temp_max" || "temp_min") {
+                arr.push(res.data.main[x] + "℃");
+              } else {
+                continue;
+              }
+            }
+            arr = arr.splice(0, 4);
             detailDiv(
               res.data.main.temp,
               res.data.weather[0].icon,
               res.data.sys.sunrise,
               res.data.sys.sunset,
               res.data.main.pressure,
-              res.data.main.humidity
+              res.data.main.humidity,
+              arr
             );
           })
           .catch((err) => {
@@ -127,7 +96,6 @@ function Navbar() {
           `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
         )
         .then((res) => {
-          // console.log(res, "sevenDays");
           setDays(res.data.daily);
         })
         .catch((err) => {
@@ -136,14 +104,25 @@ function Navbar() {
     } catch {}
   };
 
-  const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity) => {
+  const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity, e) => {
+    let arr = [];
     let hrRise = new Date(sunRise * 1000).getHours();
     let minRise = "0" + new Date(sunRise * 1000).getMinutes();
     let hrSet = new Date(sunSet * 1000).getHours();
     let minSet = "0" + new Date(sunSet * 1000).getMinutes();
     let rise = hrRise + ":" + minRise.substr(-2);
     let set = (hrSet % 12) + ":" + minSet.substr(-2);
-
+    let result = Array.isArray(e);
+    if (result == false) {
+      for (let x in e.temp) {
+        arr.push(e.temp[x] + "℃");
+      }
+      arr = arr.splice(0, 4);
+      hourTempArray.current = arr;
+    } else {
+      hourTempArray.current = e;
+    }
+    console.log(hourTempArray, "detaildiv");
     setTempgraph(data1);
     setTempicon(data2);
     setSunrise(rise);
@@ -185,7 +164,7 @@ function Navbar() {
       <div id="detail">
         {days.map((e) => (
           <div
-          id="detailInsideDiv"
+            id="detailInsideDiv"
             key={e.id}
             onClick={() => {
               detailDiv(
@@ -194,7 +173,8 @@ function Navbar() {
                 e.sunrise,
                 e.sunset,
                 e.pressure,
-                e.humidity
+                e.humidity,
+                e
               );
             }}
             tabIndex="1"
@@ -224,7 +204,32 @@ function Navbar() {
             alt=""
           />
         </div>
-        <Chart options={chartData} series={chartData.series} />
+        <Chart
+          type="area"
+          series={[
+            {
+              name: "Temperature",
+              data: [...hourTempArray.current],
+            },
+          ]}
+          options={{
+            dataLabels: {
+              formatter: (val) => {
+                return `${val}℃`;
+              },
+            },
+            yaxis: {
+              labels: {
+                formatter: (val) => {
+                  return `${val}℃`;
+                },
+              },
+            },
+            xaxis: {
+              categories: ["6:00am", "12:00pm", "6:00pm", "12:00pm"],
+            },
+          }}
+        />
 
         <div className="PressureHumidity">
           <div>
