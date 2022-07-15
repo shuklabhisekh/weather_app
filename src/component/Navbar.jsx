@@ -262,7 +262,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="mapdiv">
         <iframe
           title="gmap"
           name="gMap"
