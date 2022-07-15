@@ -39,7 +39,7 @@ cursor: pointer;
     margin-top: 25px;
     justify-content: space-between;
     margin-bottom: 30px;
-    /* border: 2px solid rebeccapurple; */
+    border: 2px solid rebeccapurple;
   }
 
   #detail>div{
