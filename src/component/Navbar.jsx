@@ -4,7 +4,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
-import { ApexOptios } from "apexcharts";
 import { CircularProgress } from "@mui/material";
 
 function Navbar() {
@@ -36,7 +35,6 @@ function Navbar() {
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
         )
         .then((res) => {
-          // console.log(res, "sencity");
           sevenDays(res.data.coord.lat, res.data.coord.lon);
         })
         .catch((err) => {
