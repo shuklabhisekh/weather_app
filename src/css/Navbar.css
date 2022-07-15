@@ -3,6 +3,7 @@
     width: 55%;
     margin: auto;
     margin-top: 15px;
+    margin-bottom: 40px;
 }
 .input{
     width: 90%;
@@ -37,7 +38,8 @@ cursor: pointer;
     display: flex;
     margin-top: 25px;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    /* border: 2px solid rebeccapurple; */
   }
 
   #detail>div{
@@ -47,6 +49,7 @@ cursor: pointer;
   #detail>div:focus{
     border: 3px solid rgb(0,166,250);
     margin-top: -3px;
+    padding-top:10px ;
 
   }
   .tempChart{
@@ -56,6 +59,7 @@ cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: auto;
     border-radius: 7px;
+    margin-bottom: 40px;
   }
   .tempChartTemp{
     margin: auto;
