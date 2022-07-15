@@ -236,7 +236,7 @@ function Navbar() {
               },
             },
             xaxis: {
-              categories: ["6:00am", "12:00pm", "6:00pm", "12:00am"],
+              categories: ["12:00am", "6:00am", "12:00pm", "6:00pm"],
             },
           }}
         />
