@@ -57,12 +57,18 @@ function Navbar() {
             `https://api.openweathermap.org/data/2.5/weather?q=${response.data.city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
           )
           .then((res) => {
-            console
+            console.log(res.data, "onlocation");
             sevenDays(res.data.coord.lat, res.data.coord.lon);
             let arr = [];
+            let count = 3;
             for (let x in res.data.main) {
+              if (count > 2) {
+                count--;
+              } else {
+                count++;
+              }
               if (x == "feels_like" || "temp" || "temp_max" || "temp_min") {
-                arr.push(res.data.main[x] + "℃");
+                arr.push(res.data.main[x] + count + "℃");
               } else {
                 continue;
               }
@@ -106,7 +112,7 @@ function Navbar() {
   };
 
   const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity, e) => {
-    console.log(e,"checking one day data");
+    console.log(e, "checking one day data");
     let arr = [];
     let hrRise = new Date(sunRise * 1000).getHours();
     let minRise = "0" + new Date(sunRise * 1000).getMinutes();
