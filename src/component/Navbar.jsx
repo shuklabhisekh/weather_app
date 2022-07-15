@@ -262,6 +262,14 @@ function Navbar() {
           </div>
         </div>
       </div>
+      <div>
+        <iframe
+          title="gmap"
+          name="gMap"
+          className="map"
+          src={`https://maps.google.com/maps?q=${city}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+        ></iframe>
+      </div>
     </div>
   );
 }
