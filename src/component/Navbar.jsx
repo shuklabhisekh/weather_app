@@ -57,6 +57,7 @@ function Navbar() {
             `https://api.openweathermap.org/data/2.5/weather?q=${response.data.city}&appid=44d2f0f421a5b483b38e2ea12704107e&units=metric`
           )
           .then((res) => {
+            console
             sevenDays(res.data.coord.lat, res.data.coord.lon);
             let arr = [];
             for (let x in res.data.main) {
@@ -105,6 +106,7 @@ function Navbar() {
   };
 
   const detailDiv = (data1, data2, sunRise, sunSet, presure, humdity, e) => {
+    console.log(e,"checking one day data");
     let arr = [];
     let hrRise = new Date(sunRise * 1000).getHours();
     let minRise = "0" + new Date(sunRise * 1000).getMinutes();

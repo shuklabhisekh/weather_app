@@ -45,12 +45,15 @@ cursor: pointer;
   #detail>div{
     width: 11%;
     font-weight: 600;
+    border: 2px solid lightgrey;
+    border-radius: 10px;
+
   }
   #detail>div:focus{
     border: 3px solid rgb(0,166,250);
     margin-top: -3px;
     padding-top:10px ;
-
+    border-radius: 10px;
   }
   .tempChart{
     padding: 10px;
